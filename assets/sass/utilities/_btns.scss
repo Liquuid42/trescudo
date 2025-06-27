@@ -29,7 +29,7 @@
         background: $title-color;
         z-index: -1;
         transition: 0.5s;
-        mask-image: url(../../img/theme-img/btn-mask.png);
+        mask-image: url(../img/theme-img/btn-mask.png);
         mask-size: 2300%, 100%;
         animation: ani2 0.5s steps(22) forwards;
     }
