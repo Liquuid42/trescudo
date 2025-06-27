@@ -2700,8 +2700,8 @@ textarea.is-invalid {
   z-index: -1;
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  -webkit-mask-image: url(assets/img/theme-img/btn-mask.png);
-          mask-image: url(assets/img/theme-img/btn-mask.png);
+  -webkit-mask-image: url(../img/theme-img/btn-mask.png);
+          mask-image: url(../img/theme-img/btn-mask.png);
   -webkit-mask-size: 2300%, 100%;
           mask-size: 2300%, 100%;
   -webkit-animation: ani2 0.5s steps(22) forwards;
