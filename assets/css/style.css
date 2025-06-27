@@ -91,12 +91,12 @@ Version: 1.0.0
   --theme-color: #007BFF;
   --theme-color2: #00F0FF;
   --theme-color3: #FF6914;
-  --title-color: #051600;
+  --title-color: #FFF7F6;
   --body-color: #6F756D;
-  --smoke-color: #F5F5F5;
+  --smoke-color: #6C757D;
   --smoke-color2: #FFF7F6;
   --smoke-color3: #FFF3E0;
-  --smoke-color4: #F2F2F2;
+  --smoke-color4: #888899;
   --black-color: #000000;
   --black-color2: #0D0D0D;
   --black-color3: #2F2F2F;
@@ -2416,7 +2416,7 @@ textarea.is-invalid {
 .th-menu-wrapper .th-menu-area {
   width: 100%;
   max-width: 310px;
-  background-color: #fff;
+  background-color: #0A0B1A;
   border-right: 3px solid var(--theme-color);
   height: 100%;
   position: relative;
