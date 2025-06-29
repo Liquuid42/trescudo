@@ -2708,7 +2708,7 @@ textarea.is-invalid {
           animation: ani2 0.5s steps(22) forwards;
 }
 .th-btn:focus, .th-btn:hover, .th-btn:active {
-  background: var(--theme-color);
+  background: var(--theme-color2);
   color: var(--white-color);
 }
 .th-btn:focus i, .th-btn:hover i, .th-btn:active i {
@@ -2723,13 +2723,13 @@ textarea.is-invalid {
           animation: ani 0.5s steps(22) forwards;
 }
 .th-btn.style2 {
-  background: var(--white-color);
-}
-.th-btn.style2:after {
   background: var(--theme-color);
 }
+.th-btn.style2:after {
+  background: var(--theme-color2);
+}
 .th-btn.style2:focus, .th-btn.style2:hover, .th-btn.style2:active {
-  color: var(--title-color);
+  color: var(--theme-color3);
 }
 .th-btn.style2:focus i, .th-btn.style2:hover i, .th-btn.style2:active i {
   color: var(--title-color);
