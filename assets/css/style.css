@@ -2696,7 +2696,7 @@ textarea.is-invalid {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--theme-color);
+  background: var(--theme-color2);
   z-index: -1;
   -webkit-transition: 0.5s;
   transition: 0.5s;
@@ -2732,28 +2732,28 @@ textarea.is-invalid {
   color: var(--theme-color3);
 }
 .th-btn.style2:focus i, .th-btn.style2:hover i, .th-btn.style2:active i {
-  color: var(--title-color);
+  color: var(--title-color2);
 }
 .th-btn.style3 {
-  background: var(--title-color);
+  background: var(--title-color2);
 }
 .th-btn.style3:after {
-  background: var(--theme-color);
+  background: var(--theme-color3);
 }
 .th-btn.style4 {
-  background: var(--theme-color);
+  background: var(--theme-color3);
 }
 .th-btn.style4:after {
-  background: var(--black-color3);
+  background: var(--black-color2);
 }
 .th-btn.style5 {
   background: var(--white-color);
 }
 .th-btn.style5:after {
-  background: var(--title-color);
+  background: var(--title-color2);
 }
 .th-btn.style5:hover {
-  color: var(--title-color);
+  color: var(--title-color3);
 }
 .th-btn.style-border {
   border: 2px solid var(--th-border-color);
@@ -2786,13 +2786,13 @@ textarea.is-invalid {
 .th-btn.style-border2:focus, .th-btn.style-border2:active, .th-btn.style-border2:hover {
   border: 2px solid var(--white-color);
   color: var(--title-color);
-  background: var(--white-color);
+  background: var(--theme-color);
 }
 .th-btn.style-border2:focus i, .th-btn.style-border2:active i, .th-btn.style-border2:hover i {
-  color: var(--title-color);
+  color: var(--theme-color2);
 }
 .th-btn.style-border2:focus:after, .th-btn.style-border2:active:after, .th-btn.style-border2:hover:after {
-  background: var(--theme-color);
+  background: var(--theme-color2);
 }
 .th-btn.style-border3 {
   border: 1px solid var(--black-color3);
