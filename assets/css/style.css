@@ -443,8 +443,8 @@ h6 {
 }
 .cursor-follower {
   position: fixed;
-  background: var(--title-color);
-  border: 1px solid var(--title-color);
+  background: var(--black-color);
+  border: 1px solid var(--black-color);
   width: 15px;
   height: 15px;
   border-radius: 100%;
