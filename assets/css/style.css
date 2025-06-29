@@ -1871,7 +1871,7 @@ textarea.style2 {
 }
 
 option:checked, option:focus, option:hover {
-  background-color: var(--theme-color);
+  background-color: var(--theme-color3);
   color: var(--white-color);
 }
 
@@ -8681,7 +8681,7 @@ ol.wp-block-rss {
   font-size: 12px;
   top: 0;
   right: 0;
-  background: var(--theme-color2);
+  background: var(--theme-color3);
   color: var(--title-color);
 }
 .header-button .icon-btn:hover .badge {
