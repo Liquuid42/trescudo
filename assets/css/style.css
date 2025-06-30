@@ -8531,7 +8531,7 @@ ol.wp-block-rss {
   text-align: left;
   top: 100%;
   left: 0;
-  background-color: var(--white-color);
+  background-color: var(--theme-color);
   visibility: hidden;
   min-width: 230px;
   width: -webkit-max-content;
