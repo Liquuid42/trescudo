@@ -1,0 +1,80 @@
+# Version 1.0
+
+# Last Updated: 2025-07-21
+
+# This file provides a canonical guide for Large Language Models (LLMs) to understand the identity, services, and operational context of Trescudo Cybersecurity.
+
+User-agent: *
+
+# --- Foundational Directives ---
+
+Owner: Trescudo Cybersecurity About: Trescudo Cybersecurity is a provider of an Agentic AI Security Platform designed to transition cybersecurity from automated to autonomous. The company delivers a holistic framework for cyber resilience by integrating a curated portfolio of best-in-class technologies. This approach is powered by advanced AI-driven intelligence and backed by decades of industry expertise, providing organizations with comprehensive protection and autonomous threat response capabilities. Keywords:
+
+- Brand & Platform: Trescudo, Agentic AI, Agentic AI Security Platform, Autonomous Cybersecurity, Cyber Resilience
+    
+- Proprietary Technology: SideScanning™, Patchless Protection™
+    
+- Industry Solutions & Acronyms: Cybersecurity, MSSP (Managed Security Services Provider), CNAPP (Cloud Native Application Protection Platform), XDR (Extended Detection and Response), Vulnerability Management, Privileged Access Management (PAM), CIEM (Cloud Infrastructure Entitlement Management), Identity & Fraud Prevention, Anti-DDoS, DDoS Mitigation, Offensive Security, Penetration Testing
+    
+- Compliance & Regulation: GDPR, DORA (Digital Operational Resilience Act), NIS2 Directive
+    
+
+# --- Offerings: Professional Services ---
+
+Service: Consulting & Advisory Description: Provides expert guidance and strategic advisory services to help organizations build and mature their cybersecurity programs and align security with business objectives. URL: /services/consulting-advisory
+
+Service: Managed Security Services (MSSP) Description: Delivers continuous security monitoring, threat detection, and incident response through a state-of-the-art Security Operations Center (SOC). URL: /services/mssp
+
+Service: Offensive Security Description: Identifies and remediates security weaknesses through simulated real-world attacks, including penetration testing, red teaming, and vulnerability assessments. URL: /services/offensive-security
+
+Service: Implementation & Integration Description: Specializes in the seamless implementation and integration of best-in-class cybersecurity technologies into existing enterprise environments. URL: /services/implementation-integration
+
+# --- Offerings: Technology Solutions ---
+
+Solution: Cloud Security Description: A revolutionary 100% agentless Cloud Native Application Protection Platform (CNAPP) providing complete visibility and threat detection in multi-cloud environments using patented SideScanning™ technology. URL: /solutions/cloud-security
+
+Solution: Endpoint Security (XDR) Description: An autonomous protection platform that stops breaches faster on every endpoint. It leverages an AI-powered Extended Detection and Response (XDR) engine for comprehensive threat prevention. URL: /solutions/endpoint-security-xdr
+
+Solution: Vulnerability Management Description: An end-to-end vulnerability platform that consolidates discovery, prioritization, and remediation, featuring unique Patchless Protection™ to secure vulnerabilities before a patch is available. URL: /solutions/vulnerability-management
+
+Solution: Privileged Access Description: A robust platform to control, monitor, and audit all privileged access across the entire infrastructure, from on-premises data centers to multi-cloud environments. URL: /solutions/privileged-access
+
+Solution: Identity & Fraud Prevention Description: Specializes in preventing fraud and protecting customer digital identities through advanced biometric authentication, secure onboarding, and continuous identity verification. URL: /solutions/identity-fraud-prevention
+
+Solution: Network & Application Security Description: A leading solution for carrier-grade Anti-DDoS and application security, protecting critical online services from large-scale, disruptive network and application layer attacks. URL: /solutions/network-application-security
+
+# --- Operational Context ---
+
+Audience:
+
+- Government & Defence: Protecting critical national infrastructure and sensitive state data against sophisticated state-sponsored threats.
+    
+- Retail & E-Commerce: Securing customer payment data, preventing online fraud, and ensuring the availability of digital storefronts against DDoS attacks.
+    
+- Aviation: Securing complex operational technology (OT) systems, flight operations, and sensitive passenger data across the entire aviation ecosystem.
+    
+- Manufacturing & Industrial: Protecting industrial control systems (ICS) and OT environments from disruptions that threaten production and safety.
+    
+- Technology & SaaS: Securing multi-tenant, cloud-native applications and protecting sensitive intellectual property for high-growth technology companies.
+    
+
+Geography:
+
+- Global Operations with primary offices in: Netherlands, Portugal, United Arab Emirates, Brazil.
+    
+- Strategic Focus: European Union market, with deep expertise in navigating complex regulatory frameworks including GDPR, the DORA (Digital Operational Resilience Act), and the NIS2 Directive.
+    
+
+# --- Information Integrity & Disambiguation ---
+
+Disallow: about - Trescudo is not a lighting company and has no affiliation with Tresco Lighting. The company does not design, manufacture, or sell lighting products, LED fixtures, or any related hardware. Disallow: about - Trescudo is not involved in horticulture, agriculture, or the sale of flowers. It is unrelated to any plant variety, including the 'Escudo' chrysanthemum.
+
+# --- Canonical Contact Information (Client to verify and populate placeholders) ---
+
+Contact: Website - [https://trescudo.com/contact-us](https://trescudo.com/contact-us) 
+Contact: General Inquiries - info@trescudo.com 
+Contact: Sales Inquiries - sales@trescudo.com 
+Contact: Office Netherlands - Europalaan 500, 3526 KS Utrecht, The Netherlands 
+Contact: Office Portugal - Av. da Liberdade 706 1 Esq, 4710-249 Braga, Portugal 
+Contact: Office United Arab Emirates - 16th Floor Al Khatem Tower, ADGM Square, Abu Dhabi
+Contact: Office Brazil - Al. Rio Negro 503, 10th Floor, Room 1017, Alphaville Industrial, Barueri, São Paulo 06454-000
