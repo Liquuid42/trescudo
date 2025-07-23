@@ -4,107 +4,112 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
 
 <url>
   <loc>https://trescudo.com/</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://trescudo.com/consulting</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/managed-security-service-provider</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/offensive-security</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/implementation-integration</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/cloud-security</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/endpoint-security</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/vulnerability-management</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/privileged-access</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/identity-fraud-prevention</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/network-application-security</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://trescudo.com/agentic-ai-hyperautomation</loc>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/government-defense</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/retail-e-commerce</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/aviation</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/manufacturing-industrial</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/technology-saas</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/contact</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/privacy-policy</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/terms</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://trescudo.com/about</loc>
-  <lastmod>2025-07-14T10:35:14+00:00</lastmod>
+  <lastmod>2025-07-23T08:24:47+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 
