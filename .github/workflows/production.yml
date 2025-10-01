@@ -1,0 +1,63 @@
+name: DEPLOY PRODUCTION (Rolling Update - Zero Downtime)
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  Deploy:
+    runs-on: [ self-hosted, production ]
+
+    steps:
+      - name: Ownership
+        run: >
+            if [ -d ./trescudo ] && [ -f ./trescudo/Makefile ]; then sudo -S <<< ${{ secrets.USR_PW }} chown -R $USER:docker ./trescudo/*; fi
+
+      - name: Rename old repo (Zero Downtime)
+        run: >
+            if [ -d ./trescudo ]; then
+              # Fix ownership first
+              sudo -S <<< ${{ secrets.USR_PW }} chown -R $USER:$USER ./trescudo || true
+
+              # Rename instead of removing to maintain zero downtime
+              timestamp=$(date +%Y%m%d-%H%M%S)
+              mv ./trescudo ./trescudo-old-${timestamp}
+              echo "Old repo renamed to: trescudo-old-${timestamp}"
+            fi
+
+      - name: Clone globalsecurepayments/trescudo repository
+        uses: GuillaumeFalourd/clone-github-repo-action@main
+        with:
+          owner: 'globalsecurepayments'
+          branch: 'main'
+          repository: 'trescudo'
+          access-token: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Rolling Deploy
+        id: deploy
+        run: cd ./trescudo && make rolling-deploy-prod
+
+      - name: Verify Deployment
+        run: cd ./trescudo && make rolling-health-prod
+
+      - name: Rollback on Failure
+        if: failure()
+        run: |
+          echo "Deployment failed, attempting rollback..."
+          cd ./trescudo && make rolling-rollback-prod || true
+          # If rollback fails, restore from renamed old repo
+          if [ -d ./trescudo-old-* ]; then
+            latest_old=$(ls -td ./trescudo-old-* | head -1)
+            echo "Restoring from renamed repo: $latest_old"
+            rm -rf ./trescudo
+            mv "$latest_old" ./trescudo
+            cd ./trescudo && docker compose -p trescudo -f docker-compose.prod.yml up -d --force-recreate
+          fi
+
+      - name: Cleanup old renamed repos
+        run: |
+          # Keep only the 2 most recent old repos (for quick rollback)
+          ls -dt ./trescudo-old-* 2>/dev/null | tail -n +3 | xargs rm -rf || true
+
+      - name: Deployment Status
+        run: cd ./trescudo && make rolling-status-prod
