@@ -4,7 +4,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: trescudo-nginx
     ports:
       - "80:80"
       - "443:443"

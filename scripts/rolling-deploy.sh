@@ -2,6 +2,7 @@
 
 # Rolling Update Deployment Script for Trescudo Static Site
 # Zero-downtime deployment using docker compose scaling
+# Updated to handle both custom container names and scaling
 
 set -e
 
@@ -38,30 +39,62 @@ log_error() {
     echo -e "${RED}[ERROR]${NC} [PROD] $1"
 }
 
+# Function to get all containers for the service
+get_service_containers() {
+    local service_name=$1
+    docker ps --filter "label=com.docker.compose.service=$service_name" \
+             --filter "label=com.docker.compose.project=$PROJECT_NAME" \
+             --format "{{.Names}}" | sort
+}
+
 # Function to check if a service is healthy
 check_service_health() {
     local service_name=$1
-    local container_name="${PROJECT_NAME}-${service_name}"
-
-    log_info "Checking health of $service_name..."
-
-    # Check if container exists and is running
-    if ! docker ps --format "table {{.Names}}" | grep -q "^$container_name"; then
-        log_error "Container $container_name not found or not running"
+    local containers=$(get_service_containers $service_name)
+    
+    if [[ -z "$containers" ]]; then
+        log_error "No containers found for service $service_name"
         return 1
     fi
 
-    # Check health status
-    local health_status=$(docker inspect $container_name --format='{{.State.Health.Status}}' 2>/dev/null || echo "none")
+    log_info "Checking health of $service_name containers..."
+    
+    local all_healthy=true
+    for container in $containers; do
+        log_info "Checking container: $container"
+        
+        # Check if container is running
+        if ! docker ps --format "{{.Names}}" | grep -q "^$container$"; then
+            log_error "Container $container not found or not running"
+            all_healthy=false
+            continue
+        fi
 
-    if [[ "$health_status" == "healthy" ]]; then
-        log_success "$service_name is healthy"
-        return 0
-    elif [[ "$health_status" == "none" ]]; then
-        log_warning "$service_name has no health check configured"
+        # Check health status
+        local health_status=$(docker inspect $container --format='{{.State.Health.Status}}' 2>/dev/null || echo "none")
+
+        if [[ "$health_status" == "healthy" ]]; then
+            log_success "Container $container is healthy"
+        elif [[ "$health_status" == "none" ]]; then
+            # If no health check, verify container is running and responsive
+            local container_status=$(docker inspect $container --format='{{.State.Status}}' 2>/dev/null || echo "unknown")
+            if [[ "$container_status" == "running" ]]; then
+                log_info "Container $container is running (no health check configured)"
+            else
+                log_warning "Container $container status: $container_status"
+                all_healthy=false
+            fi
+        else
+            log_warning "Container $container health status: $health_status"
+            all_healthy=false
+        fi
+    done
+
+    if [[ "$all_healthy" == "true" ]]; then
+        log_success "All $service_name containers are healthy"
         return 0
     else
-        log_warning "$service_name health status: $health_status"
+        log_error "Some $service_name containers are not healthy"
         return 1
     fi
 }
@@ -93,12 +126,11 @@ wait_for_health() {
 # Function to get current running containers count
 get_running_container_count() {
     local service_name=$1
-    docker ps --filter "label=com.docker.compose.service=$service_name" \
-             --filter "label=com.docker.compose.project=$PROJECT_NAME" \
-             --format "{{.Names}}" | wc -l
+    local containers=$(get_service_containers $service_name)
+    echo "$containers" | grep -c . || echo 0
 }
 
-# Function to perform rolling update
+# Function to perform rolling update with zero downtime
 perform_rolling_update() {
     log_info "Starting rolling update deployment for Trescudo..."
 
@@ -121,32 +153,44 @@ perform_rolling_update() {
 
     log_info "Found $current_count running container(s)"
 
+    # For rolling updates, we need to temporarily remove container_name to allow scaling
+    # Create a temporary compose file without container_name
+    local temp_compose_file="./docker-compose.prod.rolling.yml"
+    
+    log_info "Creating temporary compose file for rolling update..."
+    sed '/container_name:/d' $COMPOSE_FILE > $temp_compose_file
+
     # Step 1: Build new image
     log_info "Building new image..."
-    docker compose -p $PROJECT_NAME -f $COMPOSE_FILE build $SERVICE_NAME
+    docker compose -p $PROJECT_NAME -f $temp_compose_file build $SERVICE_NAME
 
-    # Step 2: Scale up with new version
+    # Step 2: Scale up with new version (keeping old containers running)
     local new_scale=$((current_count + 1))
-    log_info "Scaling $SERVICE_NAME to $new_scale containers..."
-    docker compose -p $PROJECT_NAME -f $COMPOSE_FILE up -d --scale $SERVICE_NAME=$new_scale --no-recreate $SERVICE_NAME
+    log_info "Scaling $SERVICE_NAME to $new_scale containers for zero-downtime update..."
+    
+    docker compose -p $PROJECT_NAME -f $temp_compose_file up -d --scale $SERVICE_NAME=$new_scale --no-recreate $SERVICE_NAME
 
     # Step 3: Wait for new container to be healthy
     sleep 10  # Give container time to start
     if ! wait_for_health $SERVICE_NAME; then
         log_error "New $SERVICE_NAME container failed health checks, rolling back..."
-        docker compose -p $PROJECT_NAME -f $COMPOSE_FILE up -d --scale $SERVICE_NAME=$current_count --no-recreate $SERVICE_NAME
+        docker compose -p $PROJECT_NAME -f $temp_compose_file up -d --scale $SERVICE_NAME=$current_count --no-recreate $SERVICE_NAME
+        rm -f $temp_compose_file
         return 1
     fi
 
-    # Step 4: Scale down old containers
+    # Step 4: Scale down to 1 container (removes old containers, keeps new one)
     log_info "New $SERVICE_NAME container is healthy, scaling down old containers..."
     sleep 5  # Brief pause to ensure traffic has shifted
 
-    docker compose -p $PROJECT_NAME -f $COMPOSE_FILE up -d --scale $SERVICE_NAME=1 --no-recreate $SERVICE_NAME
+    docker compose -p $PROJECT_NAME -f $temp_compose_file up -d --scale $SERVICE_NAME=1 --no-recreate $SERVICE_NAME
 
-    # Step 5: Remove old containers
-    log_info "Removing old containers..."
+    # Step 5: Switch back to original compose file with container_name for management
+    log_info "Switching back to managed container configuration..."
     docker compose -p $PROJECT_NAME -f $COMPOSE_FILE up -d --force-recreate $SERVICE_NAME
+
+    # Clean up temporary file
+    rm -f $temp_compose_file
 
     # Step 6: Final health check
     if ! wait_for_health $SERVICE_NAME; then
