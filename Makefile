@@ -11,7 +11,7 @@ certs:
 # Build and start containers
 up:
 	@echo "Starting Trescudo application..."
-	@docker-compose up -d
+	@docker compose up -d
 	@echo "Application is running at:"
 	@echo "  HTTPS: https://localhost"
 	@echo "  HTTP:  http://localhost (redirects to HTTPS)"
@@ -19,27 +19,27 @@ up:
 # Stop and remove containers
 down:
 	@echo "Stopping Trescudo application..."
-	@docker-compose down
+	@docker compose down
 
 # Build/rebuild containers
 build:
 	@echo "Building Docker images..."
-	@docker-compose build
+	@docker compose build
 
 # Restart containers
 restart:
 	@echo "Restarting Trescudo application..."
-	@docker-compose restart
+	@docker compose restart
 
 # View logs
 logs:
-	@docker-compose logs -f
+	@docker compose logs -f
 
 # Clean up everything (containers, volumes, certificates)
 clean: down
 	@echo "Cleaning up..."
 	@rm -rf certs/*.pem
-	@docker-compose down -v
+	@docker compose down -v
 	@echo "Cleanup complete"
 
 # Production rolling deployment

@@ -1,8 +1,5 @@
-version: '3.8'
 
 networks:
-  network:
-    driver: bridge
   shared_network:
     external: true
 
@@ -12,14 +9,12 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: trescudo-nginx
-    ports:
-      - "8080:80"
+    # Remove external port mapping - proxy will handle this
     volumes:
       - ./src:/usr/share/nginx/html:ro
       - ./conf/nginx.prod.conf:/etc/nginx/nginx.conf:ro
     restart: unless-stopped
     networks:
-      - network
       - shared_network
     environment:
       - TZ=UTC
