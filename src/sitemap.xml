@@ -62,7 +62,7 @@
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://trescudo.com/agentic-ai-hyperautomation</loc>
+  <loc>https://trescudo.com/agentic-AI-hyperautomation</loc>
   <lastmod>2025-07-23T11:24:06+00:00</lastmod>
   <priority>0.80</priority>
 </url>
@@ -107,7 +107,12 @@
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://trescudo.com/ransomware-readiness-quick-scan.html</loc>
+  <loc>https://trescudo.com/ransomware-readiness-quick-scan</loc>
+  <lastmod>2025-07-23T11:24:06+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://trescudo.com/vendor-quick-scan</loc>
   <lastmod>2025-07-23T11:24:06+00:00</lastmod>
   <priority>0.80</priority>
 </url>
