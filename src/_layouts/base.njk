@@ -1,0 +1,67 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+<head>
+{% include "analytics.njk" %}
+<meta charset="utf-8">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>{{ title }}</title>
+<meta name="author" content="Trescudo">
+<meta name="description" content="{{ description }}">
+<meta name="keywords" content="{{ keywords }}">
+<meta name="robots" content="INDEX,FOLLOW">
+
+{# Essential META Tags #}
+<meta property="og:title" content="{{ ogTitle | default(title) }}">
+<meta property="og:type" content="website" />
+<meta property="og:image" content="{{ ogImage | default('http://trescudo.com/thumbnail.jpg') }}">
+<meta property="og:url" content="https://trescudo.com/{{ slug }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="cloudflare-email-obfuscation" content="off">
+
+{# Non-Essential, But Recommended #}
+<meta property="og:description" content="{{ ogDescription | default('Trescudo is a global provider of cybersecurity products and services') }}">
+<meta property="og:site_name" content="Trescudo Cybersecurity">
+<meta name="twitter:image:alt" content="Trescudo Cybersecurity">
+
+{# Non-Essential, But Required for Analytics #}
+<meta name="twitter:site" content="@TrescudoCyber">
+
+{# Mobile Specific Metas #}
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+{% include "favicons.njk" %}
+{% include "css.njk" %}
+
+{# Canonical Link #}
+<link rel="canonical" href="https://trescudo.com/{{ slug }}" />
+</head>
+
+<body class="bg-black">
+{% include "analytics-noscript.njk" %}
+
+<!--[if lte IE 9]>
+	<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+<!--********************************
+    Code Start From Here
+********************************-->
+<div class="cursor-follower"></div>
+
+{% include "preloader.njk" %}
+{% include "mobile-menu.njk" %}
+{% include "header.njk" %}
+
+{# Page Content #}
+{{ content | safe }}
+
+{% include "footer.njk" %}
+
+<!--********************************
+    Code End  Here
+******************************** -->
+
+{% include "scripts.njk" %}
+</body>
+</html>

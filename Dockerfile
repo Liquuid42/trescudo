@@ -1,3 +1,21 @@
+# Stage 1: Build static site with Eleventy
+FROM node:18-alpine AS builder
+
+WORKDIR /build
+
+# Copy package files
+COPY src/package*.json ./
+
+# Install dependencies
+RUN npm ci --production=false
+
+# Copy source files
+COPY src/ ./
+
+# Build the site
+RUN npm run build
+
+# Stage 2: Serve with Nginx
 FROM nginx:alpine
 
 # Install openssl for certificate generation
@@ -11,6 +29,10 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Create directory for SSL certificates
 RUN mkdir -p /etc/nginx/certs
+
+# Copy built site from builder stage
+# Note: Eleventy outputs to ../dist (parent of /build), which resolves to /dist
+COPY --from=builder /dist /usr/share/nginx/html
 
 # Expose ports
 EXPOSE 80 443

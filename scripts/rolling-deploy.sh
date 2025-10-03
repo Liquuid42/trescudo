@@ -134,6 +134,35 @@ get_running_container_count() {
 perform_rolling_update() {
     log_info "Starting rolling update deployment for Trescudo..."
 
+    # Step 0: Build the static site locally before Docker build
+    log_info "Building static site with Eleventy..."
+    if [ -f "src/package.json" ]; then
+        cd src
+
+        # Install dependencies if node_modules doesn't exist or is outdated
+        if [ ! -d "node_modules" ] || [ "package.json" -nt "node_modules" ]; then
+            log_info "Installing dependencies..."
+            npm ci --production=false
+        fi
+
+        # Build the site
+        log_info "Running Eleventy build..."
+        npm run build
+
+        cd ..
+
+        # Verify dist directory was created
+        if [ ! -d "dist" ]; then
+            log_error "Build failed: dist directory not created"
+            return 1
+        fi
+
+        log_success "Static site built successfully"
+    else
+        log_error "src/package.json not found - cannot build site"
+        return 1
+    fi
+
     # Ensure shared network exists
     if ! docker network inspect shared_network >/dev/null 2>&1; then
         log_info "Creating shared_network..."

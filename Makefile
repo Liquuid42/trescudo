@@ -42,6 +42,44 @@ clean: down
 	@docker compose down -v
 	@echo "Cleanup complete"
 
+# Development with hot reload (Eleventy on host, nginx in Docker)
+dev:
+	@echo "Starting development environment..."
+	@if [ ! -d "src/node_modules" ]; then \
+		echo "Installing dependencies..."; \
+		cd src && npm ci; \
+	fi
+	@if [ ! -d "dist" ]; then \
+		echo "Building initial dist/..."; \
+		cd src && npm run build && cd ..; \
+	fi
+	@echo "Starting nginx in Docker..."
+	@docker compose up -d
+	@echo ""
+	@echo "=========================================="
+	@echo "Development environment running:"
+	@echo "  Nginx:    https://localhost"
+	@echo "            http://localhost"
+	@echo "  Eleventy: http://localhost:8080"
+	@echo "  Hot reload: Edit src/, auto-rebuilds"
+	@echo "=========================================="
+	@echo ""
+	@echo "Starting Eleventy watch mode..."
+	@cd src && npm run start
+
+# Stop development environment
+dev-stop:
+	@echo "Stopping development environment..."
+	@docker compose down
+	@pkill -f "eleventy" || true
+	@echo "Development environment stopped"
+
+# Rebuild manually (if needed)
+dev-rebuild:
+	@echo "Rebuilding site..."
+	@cd src && npm run build
+	@echo "Rebuild complete. Refresh browser."
+
 # Production rolling deployment
 rolling-deploy-prod:
 	@echo "Starting production rolling deployment..."
@@ -64,15 +102,16 @@ help:
 	@echo "Trescudo Docker Makefile"
 	@echo ""
 	@echo "Development targets:"
-	@echo "  make         - Start the application (default)"
-	@echo "  make all     - Start the application"
-	@echo "  make up      - Start the application"
-	@echo "  make down    - Stop the application"
-	@echo "  make build   - Build/rebuild Docker images"
-	@echo "  make restart - Restart the application"
-	@echo "  make logs    - View application logs"
-	@echo "  make certs   - Generate SSL certificates"
-	@echo "  make clean   - Stop and clean up everything"
+	@echo "  make dev         - Start development with hot reload"
+	@echo "  make dev-stop    - Stop development environment"
+	@echo "  make dev-rebuild - Manually rebuild dist/"
+	@echo "  make up          - Start nginx (serves dist/)"
+	@echo "  make down        - Stop nginx"
+	@echo "  make build       - Build Docker images"
+	@echo "  make restart     - Restart the application"
+	@echo "  make logs        - View application logs"
+	@echo "  make certs       - Generate SSL certificates"
+	@echo "  make clean       - Stop and clean up everything"
 	@echo ""
 	@echo "Production targets:"
 	@echo "  make rolling-deploy-prod   - Deploy with zero downtime"
