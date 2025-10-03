@@ -10,8 +10,8 @@ services:
       dockerfile: Dockerfile
     container_name: trescudo-nginx
     # Remove external port mapping - proxy will handle this
+    # Note: Static files are baked into Docker image (multi-stage build), no volume mount needed
     volumes:
-      - ./dist:/usr/share/nginx/html:ro
       - ./conf/nginx.prod.conf:/etc/nginx/nginx.conf:ro
     restart: unless-stopped
     networks:
