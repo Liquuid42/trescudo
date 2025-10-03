@@ -5,10 +5,9 @@
   "scripts": {
     "start": "eleventy --serve",
     "build": "eleventy",
-    "build:css": "npm run build:css:compile && npm run build:css:purge && npm run build:css:minify",
-    "build:css:compile": "sass assets/sass:assets/css --style expanded",
-    "build:css:purge": "purgecss --css assets/css/style.css --content '../dist/**/*.html' --output assets/css/",
-    "build:css:minify": "cleancss -o ../dist/assets/css/style.min.css assets/css/style.css",
+    "build:css": "npm run build:css:purge && npm run build:css:minify",
+    "build:css:purge": "purgecss --config ./purgecss.config.js",
+    "build:css:minify": "cleancss -o assets/css/style.min.css assets/css/style.css",
     "build:fontawesome": "node ../scripts/subset-fontawesome.js",
     "build:prod": "npm run build && npm run build:css && npm run build:fontawesome"
   },
@@ -24,6 +23,7 @@
     "@11ty/eleventy": "^2.0.1",
     "@fullhuman/postcss-purgecss": "^5.0.0",
     "clean-css-cli": "^5.6.3",
+    "glob": "^11.0.3",
     "purgecss": "^5.0.0",
     "sass": "^1.69.5"
   },

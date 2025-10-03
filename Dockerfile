@@ -12,8 +12,8 @@ RUN npm ci --production=false
 # Copy source files
 COPY src/ ./
 
-# Build the site
-RUN npm run build
+# Build the site with CSS optimization
+RUN npm run build:prod
 
 # Stage 2: Serve with Nginx
 FROM nginx:alpine
