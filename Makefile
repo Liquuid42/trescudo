@@ -6,7 +6,7 @@ all: up
 # Generate SSL certificates for development
 certs:
 	@echo "Generating SSL certificates..."
-	@./generate-certs.sh
+	@./scripts/generate-certs.sh
 
 # Build and start containers
 up:
