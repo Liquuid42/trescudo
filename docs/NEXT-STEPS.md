@@ -8,6 +8,7 @@
 - [x] Removed 58 lines of YAGNI violations
 - [x] Fixed event listener memory leaks
 - [x] Documented everything
+- [x] **DEPLOYED TO PRODUCTION** ✅
 
 ### Phase 2: HTML Templating Infrastructure ✅
 - [x] Installed and configured Eleventy (11ty)
@@ -15,16 +16,36 @@
 - [x] Created base layout template
 - [x] Set up build system (package.json, .eleventy.js)
 - [x] Documented migration process
+- [x] Moved build files to src/ directory
+- [x] Updated Docker multi-stage build
+- [x] Updated rolling-deploy script
+- [x] **DEPLOYED TO PRODUCTION** ✅
 
-### Phase 2.5: Build System Restructuring ✅
-- [x] Moved package.json and .eleventy.js to src/ directory
-- [x] Updated Dockerfile with multi-stage Node.js + Nginx build
-- [x] Updated docker-compose.prod.yml to mount dist/ directory
-- [x] Updated rolling-deploy.sh to run build before Docker deploy
-- [x] Created .gitignore for dist/ and node_modules
-- [x] Tested build process locally
-- [x] Organized HTML files into src/pages/ directory
-- [x] Set up local development with hot reload (make dev)
+### Phase 2A: HTML to Nunjucks Migration (Manual) ✅
+- [x] about.html → about.njk
+- [x] contact.html → contact.njk
+- [x] error.html → error.njk
+- [x] privacy-policy.html → privacy-policy.njk
+- [x] terms.html → terms.njk
+- [x] Created extract-content.sh helper script
+
+### Phase 2B: HTML to Nunjucks Migration (Automated) ✅
+- [x] Created migrate-html-to-njk.sh automation script
+- [x] Migrated all 21 remaining pages:
+  - Services: consulting, mssp, offensive-security, implementation-integration
+  - Solutions: cloud, endpoint, vulnerability, privileged-access, identity, network, agentic-ai
+  - Verticals: government, retail, aviation, manufacturing, technology
+  - Resources: guides, briefs, reports, ransomware-scan, vendor-scan
+- [x] **Total: 26/27 pages migrated** (only homepage remains)
+
+### Phase 2C: Bug Fixes & Cleanup ✅
+- [x] Fixed asset paths to use absolute paths (CSS, JS, images)
+- [x] Fixed navigation links to use absolute paths
+- [x] Fixed footer navigation links
+- [x] Removed 26 .html.bak backup files (16,695 lines)
+- [x] Removed migration scripts (migrate-html-to-njk.sh, extract-content.sh)
+- [x] Tested and verified all pages build correctly
+- [x] **Ready to deploy** ✅
 
 ### Documentation Created ✅
 - [x] docs/REFACTORING.md - Technical documentation
@@ -35,342 +56,325 @@
 
 ---
 
-## 🚀 Immediate Next Actions (Choose Your Path)
+## 🚀 Immediate Next Actions
 
-### Option A: Deploy Phase 1 Only (Fastest)
-**Timeline**: 15 minutes
-**Risk**: Low (fully tested, backward compatible)
+### 1. Deploy Phase 2 to Production (HIGH PRIORITY)
+**Timeline**: 15-30 minutes
+**Status**: ✅ Ready to deploy (5 commits pending)
+**Risk**: Low (fully tested, navigation verified)
 
 ```bash
-# 1. Test the modular JavaScript
-cd /Users/johnsmith/Desktop/work/trescudo/src/assets/js
-cp main-modular.js main.js
+# 1. Push commits to origin
+git push origin main
 
-# 2. Test in browser
-open ../../../index.html
-# Verify:
-# - Mobile menu works
-# - Sliders work
-# - Smooth scroll works
-# - No console errors
+# 2. Deploy using rolling deploy (zero downtime)
+make rolling-deploy-prod
 
-# 3. Commit and deploy
-git add .
-git commit -m "Refactor JavaScript to modular architecture
+# 3. Monitor deployment
+make rolling-status-prod
 
-- Split 1,052-line monolith into 9 focused modules
-- Removed 58 lines of YAGNI violations (Woocommerce)
-- Implemented conditional loading for performance
-- Fixed event listener memory leaks
-- 16% code reduction, better maintainability
-
-🤖 Generated with Claude Code"
-
-# 4. Deploy to production (your usual process)
+# 4. Verify production site
+# - Check navigation works from subdirectory pages
+# - Verify CSS/JS assets load
+# - Test footer links
+# - Check mobile menu
 ```
 
-### Option B: Set Up Phase 2 for Testing
-**Timeline**: 30 minutes
-**Risk**: None (separate build, doesn't affect production)
+**Commits ready to push:**
+1. `4ea4764` - Fix asset paths in includes - use absolute paths
+2. `d88b50b` - Fix all navigation links to use absolute paths
+3. `5d0624c` - Remove .bak backup files after successful migration
+4. `3b1fb93` - Remove migration scripts after Phase 2 completion
+5. `6b3c29a` - Complete Phase 2 HTML to Nunjucks migration
+
+### 2. Migrate Homepage (index.html)
+**Timeline**: 30-45 minutes
+**Status**: ⏳ Last page to migrate (1/27 remaining)
+**Risk**: Medium (homepage has special one-page navigation)
+
+The homepage (`src/index.html`) is special because:
+- Uses one-page navigation with anchor links (#hero, #about-sec, #contact-sec)
+- Has `onepageNav` variable that conditionals in header.njk/mobile-menu.njk check
+- Needs careful testing of scroll behavior and anchor links
 
 ```bash
-# 1. Install dependencies (build files now in src/)
-cd /Users/johnsmith/Desktop/work/trescudo/src
-npm install
+# 1. Create index.njk with special front matter
+# Set: onepageNav: true
 
-# 2. Start development server
-npm start
+# 2. Extract content from index.html
 
-# 3. Open browser
-# Visit: http://localhost:8080
-# Verify: Build works, includes load
+# 3. Test locally
+cd src && npm run build
+# Verify anchor links work
 
-# 4. Keep running for development
-# Make changes, see instant updates
+# 4. Backup and test
+mv index.html index.html.bak
+npm run build
+
+# 5. Deploy
 ```
 
-### Option C: Full Migration (Phases 1 & 2)
-**Timeline**: 2-4 hours
-**Risk**: Low (fully backward compatible, documented)
+### 3. Phase 3: CSS Optimization (Next Priority)
+**Timeline**: 1-2 hours
+**Status**: ⏳ Ready to start after Phase 2 complete
+**Risk**: Low (can revert if issues)
 
-**Step 1**: Deploy Phase 1 (see Option A)
-**Step 2**: Set up Phase 2 (see Option B)
-**Step 3**: Migrate HTML pages
+**Why wait until now?**
+PurgeCSS needs to scan all final HTML files to determine which CSS classes are actually used. Now that all pages are migrated and the HTML is stable, we can safely optimize.
+
+**Expected improvements:**
+- 84% smaller CSS files
+- Faster page loads
+- Better mobile performance
+- Improved SEO scores
 
 ```bash
-# Follow the guide in docs/PHASE2-MIGRATION.md
+# 1. Install PurgeCSS
+cd src
+npm install -D @fullhuman/postcss-purgecss
 
-# Quick version:
-# 1. cd /Users/johnsmith/Desktop/work/trescudo/src
-# 2. Pick a simple page (e.g., about.html)
-# 3. Create about.njk with front matter
-# 4. Copy page content only (no header/footer)
-# 5. Test: npm start
-# 6. Verify in browser
-# 7. Repeat for remaining pages
+# 2. Configure PurgeCSS in build process
+
+# 3. Generate FontAwesome subset (only used icons)
+
+# 4. Test thoroughly (CSS optimization can break styling)
+
+# 5. Deploy
 ```
 
 ---
 
-## 📋 Detailed Action Plan
+## 📋 Current Project Status
 
-### Week 1: Phase 1 Deployment
+### Completed ✅
+| Phase | Status | Lines Changed | Impact |
+|-------|--------|---------------|--------|
+| Phase 1: JavaScript Refactoring | ✅ Deployed | -172 lines | Better maintainability |
+| Phase 2A: Eleventy Setup | ✅ Deployed | +880 lines | Build infrastructure |
+| Phase 2B: Template Migration | ✅ Ready | -16,874 lines | 96% less HTML duplication |
+| Phase 2C: Bug Fixes | ✅ Ready | +0 lines | Navigation & assets fixed |
 
-**Day 1**: Test & Deploy JavaScript
-- [ ] Test `main-modular.js` locally
-- [ ] Verify all features work
-- [ ] Check console for errors
-- [ ] Deploy to production
-- [ ] Monitor for issues
-
-### Week 2: Phase 2 Setup & First Migration
-
-**Day 1-2**: Set up build system
-- [x] Run `npm install` (in src/ directory)
-- [x] Test `npm start`
-- [x] Verify Eleventy works
-- [ ] Review migration guide (docs/PHASE2-MIGRATION.md)
-
-**Day 3-5**: Migrate first 5 pages
-- [ ] about.html → about.njk
-- [ ] contact.html → contact.njk
-- [ ] error.html → error.njk
-- [ ] privacy-policy.html → privacy-policy.njk
-- [ ] terms.html → terms.njk
-- [ ] Test each page
-- [ ] Fix any issues
-
-### Week 3: Batch Migration
-
-**Day 1**: Services pages (4 pages)
-- [ ] consulting.html → consulting.njk
-- [ ] managed-security-service-provider.html → managed-security-service-provider.njk
-- [ ] offensive-security.html → offensive-security.njk
-- [ ] implementation-integration.html → implementation-integration.njk
-
-**Day 2**: Solutions pages (7 pages)
-- [ ] cloud-security.html → cloud-security.njk
-- [ ] endpoint-security.html → endpoint-security.njk
-- [ ] vulnerability-management.html → vulnerability-management.njk
-- [ ] privileged-access.html → privileged-access.njk
-- [ ] identity-fraud-prevention.html → identity-fraud-prevention.njk
-- [ ] network-application-security.html → network-application-security.njk
-- [ ] agentic-ai-hyperautomation.html → agentic-ai-hyperautomation.njk
-
-**Day 3**: Verticals pages (5 pages)
-- [ ] government-defense.html → government-defense.njk
-- [ ] retail-e-commerce.html → retail-e-commerce.njk
-- [ ] aviation.html → aviation.njk
-- [ ] manufacturing-industrial.html → manufacturing-industrial.njk
-- [ ] technology-saas.html → technology-saas.njk
-
-**Day 4**: Resources & Special pages (6 pages)
-- [ ] guides.html → guides.njk
-- [ ] cybersecurity-briefs.html → cybersecurity-briefs.njk
-- [ ] reports.html → reports.njk
-- [ ] ransomware-readiness-quick-scan.html → ransomware-readiness-quick-scan.njk
-- [ ] vendor-quick-scan.html → vendor-quick-scan.njk
-- [ ] index.html → index.njk (special - one-page nav)
-
-**Day 5**: Testing & fixes
-- [ ] Test all migrated pages
-- [ ] Fix any broken links
-- [ ] Verify meta tags
-- [ ] Check console errors
-- [ ] Build for production: `npm run build`
-
-### Week 4: Deployment & Phase 3
-
-**Day 1-2**: Deploy Phase 2
-- [ ] Update Docker configuration
-- [ ] Test build process
-- [ ] Deploy to staging
-- [ ] Test staging thoroughly
-- [ ] Deploy to production
-- [ ] Monitor for issues
-
-**Day 3-5**: Phase 3 CSS Optimization
-- [ ] Run PurgeCSS
-- [ ] Generate FontAwesome subset
-- [ ] Minify CSS
-- [ ] Test performance
-- [ ] Deploy optimizations
+### Pending ⏳
+| Task | Estimated Time | Blocker |
+|------|---------------|---------|
+| Deploy Phase 2 to prod | 15-30 min | None - ready to go |
+| Migrate homepage (index.html) | 30-45 min | Should deploy Phase 2 first |
+| Phase 3: CSS Optimization | 1-2 hours | Homepage migration |
+| Phase 4: Docker optimization | 30 min | Optional enhancement |
 
 ---
 
-## 🎯 Quick Wins (Choose 1-2)
+## 🎯 Metrics & Achievements
 
-### Quick Win #1: Deploy Phase 1 JavaScript (Today)
-**Time**: 15 minutes
-**Impact**: Cleaner codebase, better maintainability
-**Risk**: Very low
+### Code Reduction
+- **JavaScript**: 1,052 → 880 lines (16% reduction)
+- **HTML duplication**: Eliminated 16,695 lines of duplicated code
+- **Migration scripts**: Removed 179 lines of temporary tooling
+- **Total reduction**: ~17,046 lines removed
 
-```bash
-cd /Users/johnsmith/Desktop/work/trescudo/src/assets/js
-cp main-modular.js main.js
-# Test, commit, deploy
-```
+### Maintenance Improvement
+- **Before**: Edit header/footer in 27 files (54 locations)
+- **After**: Edit 2-3 include files (header.njk, footer.njk, mobile-menu.njk)
+- **Improvement**: 96% less maintenance effort
 
-### Quick Win #2: Migrate One Page (Tomorrow)
-**Time**: 30 minutes
-**Impact**: Proof of concept, learn the process
-**Risk**: None (doesn't affect production)
+### Build System
+- ✅ Eleventy static site generator
+- ✅ Multi-stage Docker build (Node.js + Nginx)
+- ✅ Hot reload development (`npm start`)
+- ✅ Production build pipeline
+- ✅ Zero-downtime rolling deployments
 
-```bash
-# Follow docs/PHASE2-MIGRATION.md
-# Convert about.html → about.njk
-# Test with: npm start
-```
-
-### Quick Win #3: Update Header Once (This Week)
-**Time**: 5 minutes
-**Impact**: Demonstrate 96% maintenance savings
-**Example**: Add new menu item
-
-**Before Phase 2**: Edit 54 locations (27 files × 2 menus)
-**After Phase 2**: Edit 2 files (header.njk + mobile-menu.njk)
+### Pages Migrated (26/27 = 96%)
+- ✅ About, Contact, Error, Privacy Policy, Terms
+- ✅ 4 Services pages
+- ✅ 7 Solutions pages
+- ✅ 5 Verticals pages
+- ✅ 5 Resources pages
+- ⏳ Homepage (special case - one-page nav)
 
 ---
 
-## 📞 Decision Points
+## 🚦 Decision Points
 
-### Should I deploy Phase 1 JavaScript?
-**YES** if:
-- ✅ You want cleaner, more maintainable code
-- ✅ You want to fix the event listener memory leaks
-- ✅ You want conditional loading for performance
-- ✅ You've tested it locally and it works
+### Should I deploy Phase 2 now?
+**YES** ✅
+- All 26 pages tested and working
+- Navigation verified (absolute paths)
+- Assets loading correctly
+- 5 commits ready to push
+- Zero-downtime rolling deploy available
 
-**WAIT** if:
-- ⏳ You want to deploy everything together (Phases 1 & 2)
-- ⏳ You need more time to test
+**Recommendation**: Deploy immediately. Only homepage remains to migrate, and it doesn't block deployment.
 
-**Recommendation**: Deploy Phase 1 now. It's fully tested and backward compatible.
+### Should I migrate the homepage before deploying?
+**NO** ⏳
+- Deploy Phase 2 first to get 96% of benefits
+- Homepage can be migrated and deployed separately
+- Reduces deployment complexity
+- Homepage has special one-page nav that needs careful testing
 
-### Should I start Phase 2 migration?
-**YES** if:
-- ✅ You're tired of editing 27 files for simple changes
-- ✅ You want to reduce maintenance effort by 96%
-- ✅ You have 2-4 hours available this week
-- ✅ You want better long-term maintainability
+**Recommendation**: Deploy Phase 2 now, migrate homepage in a follow-up.
 
-**WAIT** if:
-- ⏳ Phase 1 needs to be deployed first
-- ⏳ You need to focus on other priorities
-- ⏳ You want more familiarity with Eleventy
+### Should I start Phase 3 CSS optimization?
+**WAIT** ⏳ until homepage is migrated
+**Reason**: PurgeCSS needs to scan all HTML to determine used CSS classes
+**Exception**: Can start planning and installing dependencies now
 
-**Recommendation**: Set up Phase 2 (`npm install && npm start`) even if you don't migrate yet. It's ready when you are.
-
-### Should I do Phase 3 CSS optimization?
-**WAIT UNTIL** Phase 2 HTML migration is complete
-**REASON**: PurgeCSS needs to scan all HTML files to know which CSS classes are used
-
-**Recommendation**: Complete Phases 1 & 2 first, then tackle Phase 3.
+**Recommendation**: Deploy Phase 2 → Migrate homepage → Then tackle CSS optimization.
 
 ---
 
-## 🚦 Current Status
+## 📊 Remaining Work Breakdown
 
-### Ready to Deploy ✅
-- **Phase 1 JavaScript**: Fully tested, documented, backward compatible
-- **Phase 2 Infrastructure**: Build system configured, includes created
+### High Priority (This Week)
+1. **Deploy Phase 2** (15-30 min)
+   - Push 5 commits
+   - Run rolling deploy
+   - Verify production
 
-### Ready to Implement ⏳
-- **Phase 2 Migration**: Guide provided, process documented
-- **Phase 3 CSS**: Scripts ready, waiting for Phase 2 completion
-- **Phase 4 Docker**: Configuration documented
+2. **Migrate Homepage** (30-45 min)
+   - Create index.njk with `onepageNav: true`
+   - Test one-page navigation
+   - Deploy
 
-### Blockers 🚫
-- **None** - Everything is ready to go
+### Medium Priority (Next Week)
+3. **CSS Optimization** (1-2 hours)
+   - Install PurgeCSS
+   - Configure build pipeline
+   - Generate FontAwesome subset
+   - Test and deploy
+
+4. **Performance Testing** (1 hour)
+   - Run Lighthouse audits
+   - Verify SEO scores
+   - Test mobile performance
+   - Document improvements
+
+### Low Priority (Optional)
+5. **Docker Optimization** (30 min)
+   - Multi-stage build already implemented
+   - Could optimize layer caching
+   - Could reduce image size further
+
+6. **Additional Enhancements**
+   - Add sitemap.xml generation
+   - Add robots.txt optimization
+   - Add structured data (JSON-LD)
+   - Add meta tags optimization
 
 ---
 
 ## 💡 Recommendations
 
+### Today (Highest Priority)
+1. **Deploy Phase 2 to production** - 5 commits ready, fully tested
+2. **Monitor deployment** - Verify navigation and assets work
+
 ### This Week
-1. ✅ Deploy Phase 1 JavaScript (low risk, high value)
-2. ✅ Run `npm install && npm start` to test Phase 2 setup
-3. ✅ Migrate 1-2 pages to learn the process
+3. **Migrate homepage** - Last page remaining
+4. **Deploy homepage** - Complete Phase 2 migration
 
 ### Next Week
-4. Migrate remaining HTML pages (batch of 5-10 per day)
-5. Test thoroughly
-6. Deploy Phase 2
-
-### Week After
-7. Run Phase 3 CSS optimization
-8. Update Docker configuration
-9. Deploy final optimized version
+5. **CSS Optimization (Phase 3)** - 84% file size reduction
+6. **Performance audit** - Measure improvements
 
 ---
 
-## 📊 Expected Timeline
+## ✅ Final Checklist Before Deployment
 
-| Phase | Time | Status |
-|-------|------|--------|
-| Phase 1 Deploy | 15 min | ✅ Ready |
-| Phase 2 Setup | 30 min | ✅ Ready |
-| Phase 2 Migration | 2-4 hours | ⏳ Ready to start |
-| Phase 3 CSS | 1-2 hours | ⏳ After Phase 2 |
-| Phase 4 Docker | 1 hour | ⏳ After Phase 3 |
-| **Total** | **5-8 hours** | **Can be spread over 2-3 weeks** |
+### Pre-Deployment Verification
+- [x] All 26 pages build successfully
+- [x] Navigation links use absolute paths
+- [x] Asset paths use absolute paths
+- [x] CSS/JS loads on subdirectory pages
+- [x] Footer links work correctly
+- [x] Mobile menu tested
+- [x] No .bak files in repository
+- [x] Migration scripts removed
+- [x] Git commits ready to push
+
+### Deployment Process
+- [ ] Push commits: `git push origin main`
+- [ ] Run deployment: `make rolling-deploy-prod`
+- [ ] Check status: `make rolling-status-prod`
+- [ ] Verify production site works
+
+### Post-Deployment Testing
+- [ ] Test navigation from homepage
+- [ ] Test navigation from subdirectory pages
+- [ ] Verify CSS loads on all pages
+- [ ] Check mobile menu functionality
+- [ ] Test footer links
+- [ ] Verify no console errors
+- [ ] Check all 26 migrated pages
 
 ---
 
-## 🎉 What You Get
+## 🎉 What You've Achieved
 
-### Immediate (Phase 1)
-- ✅ Cleaner, modular JavaScript
+### Phase 1 (Completed & Deployed) ✅
+- ✅ Cleaner, modular JavaScript architecture
 - ✅ Fixed memory leaks
 - ✅ Better performance (conditional loading)
-- ✅ 16% code reduction
+- ✅ 16% code reduction (172 lines)
+- ✅ Comprehensive documentation
 
-### Short-term (Phase 2)
+### Phase 2 (Ready to Deploy) ✅
 - ✅ 96% less maintenance effort
-- ✅ Single source of truth for header/footer
-- ✅ 57% less HTML code
-- ✅ Hot reload development
+- ✅ Single source of truth for header/footer/scripts
+- ✅ Eliminated 16,695 lines of duplicated HTML
+- ✅ Professional build system with hot reload
+- ✅ 26/27 pages migrated successfully
+- ✅ All navigation and asset issues resolved
 
-### Long-term (Phase 3)
-- ✅ 84% faster page loads
-- ✅ Better SEO scores
-- ✅ Improved mobile performance
-- ✅ Professional build system
-
----
-
-## ✅ Final Checklist
-
-Before you start:
-- [ ] Read docs/REFACTORING.md (skim for overview)
-- [ ] Read docs/PHASE2-MIGRATION.md (if doing Phase 2)
-- [ ] Read docs/OPTIMIZATION-SUMMARY.md (executive summary)
-
-Phase 1 Deploy:
-- [ ] Test main-modular.js locally
-- [ ] Verify no console errors
-- [ ] Create backup
-- [ ] Deploy
-
-Phase 2 Setup:
-- [ ] Run `npm install`
-- [ ] Run `npm start`
-- [ ] Verify localhost:8080 works
-
-Phase 2 Migration:
-- [ ] Pick first page
-- [ ] Follow migration guide
-- [ ] Test
-- [ ] Repeat
+### Coming Next (Phase 3) ⏳
+- ⏳ 84% smaller CSS files
+- ⏳ Faster page loads
+- ⏳ Better SEO scores
+- ⏳ Improved mobile performance
 
 ---
 
-**Ready to start?** Pick Option A, B, or C above and begin!
+## 📞 Support & Documentation
 
-**Questions?** Check the documentation:
-- Technical details → docs/REFACTORING.md
-- Migration guide → docs/PHASE2-MIGRATION.md
-- Summary → docs/OPTIMIZATION-SUMMARY.md
-- Quick ref → docs/README-REFACTORING.md
+### Documentation Files
+- **Technical details** → `docs/REFACTORING.md`
+- **Migration guide** → `docs/PHASE2-MIGRATION.md`
+- **Executive summary** → `docs/OPTIMIZATION-SUMMARY.md`
+- **Quick reference** → `docs/README-REFACTORING.md`
+- **This file** → `docs/NEXT-STEPS.md`
 
-**Status**: 🟢 All systems go. Zero blockers. Ready to deploy.
+### Key Commands
+```bash
+# Local development
+cd src && npm start          # Hot reload dev server
+cd src && npm run build      # Production build
+
+# Deployment
+git push origin main         # Push commits
+make rolling-deploy-prod     # Zero-downtime deploy
+make rolling-status-prod     # Check deployment status
+make rolling-rollback-prod   # Rollback if needed
+
+# Testing
+curl https://trescudo.com/   # Test homepage
+curl https://trescudo.com/about/  # Test migrated page
+```
+
+---
+
+## 🚀 Current Status
+
+**Phase 1**: ✅ Deployed to production
+**Phase 2**: ✅ Ready to deploy (5 commits pending)
+**Homepage**: ⏳ 1 page remaining (special case)
+**Phase 3**: ⏳ Ready to start after homepage
+
+**Blockers**: None
+**Risk Level**: Low
+**Recommendation**: **Deploy Phase 2 now** 🚀
+
+---
+
+**Last Updated**: October 3, 2025
+**Next Action**: Deploy Phase 2 to production (`git push && make rolling-deploy-prod`)
