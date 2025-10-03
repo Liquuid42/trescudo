@@ -11,15 +11,12 @@
 
 const fs = require('fs');
 const path = require('path');
-
-// Import glob from src/node_modules
-const globModule = require('../src/node_modules/glob');
-const glob = globModule.glob || globModule;
+const { glob } = require('glob');
 
 // Configuration
-const DIST_DIR = path.join(__dirname, '../dist');
-const FA_SOURCE = path.join(__dirname, '../src/assets/css/fontawesome.min.css');
-const FA_OUTPUT = path.join(__dirname, '../dist/assets/css/fontawesome.min.css');
+const DIST_DIR = path.join(__dirname, '../../dist');
+const FA_SOURCE = path.join(__dirname, '../assets/css/fontawesome.min.css');
+const FA_OUTPUT = path.join(__dirname, '../../dist/assets/css/fontawesome.min.css');
 
 console.log('🔍 FontAwesome Subset Generator\n');
 
