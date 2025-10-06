@@ -11354,4 +11354,38 @@ ul.comment-list .th-comment-item:first-child:not(.children .th-comment-item) > .
     padding-bottom: calc(var(--section-space-mobile) - 30px);
   }
 }
+
+/* Mobile Responsiveness Fixes */
+@media (max-width: 768px) {
+  /* Add breathing room to header on mobile */
+  .th-header .menu-area .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  /* Ensure all containers have min padding on mobile */
+  .container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+
+  /* Reduce large row gutters and remove negative margins to prevent overflow */
+  .row.gx-60, .row.gx-100 {
+    --bs-gutter-x: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* Remove column offsets on mobile to prevent overflow */
+  [class*="offset-"] {
+    margin-left: 0;
+  }
+
+  /* Universal text overflow prevention */
+  p, h1, h2, h3, h4, h5, h6, span, a, li {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
 /*------------------- RTL -------------------*/
