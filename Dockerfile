@@ -15,8 +15,8 @@ COPY src/ ./
 # Build the site with CSS optimization
 RUN npm run build:prod
 
-# Stage 2: Serve with Nginx
-FROM nginx:alpine
+# Stage 2: Serve with Nginx with Brotli
+FROM fholzer/nginx-brotli:latest
 
 # Install openssl for certificate generation
 RUN apk add --no-cache openssl

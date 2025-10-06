@@ -23,6 +23,22 @@ module.exports = function(eleventyConfig) {
     // Enable quiet mode for cleaner output
     eleventyConfig.setQuietMode(true);
 
+    // Image shortcodes for WebP and lazy loading
+    eleventyConfig.addShortcode('image', function(src, alt = '', loading = 'lazy', className = '') {
+        if (!src) return '';
+        const webpSrc = src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+        return `<picture>
+  <source srcset="${webpSrc}" type="image/webp">
+  <img src="${src}" alt="${alt}" loading="${loading}"${className ? ` class="${className}"` : ''}>
+</picture>`;
+    });
+
+    eleventyConfig.addShortcode('bgImage', function(src) {
+        if (!src) return '';
+        const webpSrc = src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+        return `data-bg-src="${src}" data-bg-webp="${webpSrc}"`;
+    });
+
     // Custom permalink processing to flatten pages/ directory structure
     eleventyConfig.addGlobalData("eleventyComputed", {
         permalink: function(data) {
