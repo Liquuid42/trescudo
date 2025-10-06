@@ -1,7 +1,19 @@
-{# CSS Files #}
+{# CSS Files - Optimized for Performance #}
+{# Preload critical CSS for faster rendering #}
+<link rel="preload" href="/assets/css/fonts.css" as="style">
+<link rel="preload" href="/assets/css/style.min.css" as="style">
+
+{# Critical CSS - Load immediately #}
 <link rel="stylesheet" href="/assets/css/fonts.css">
 <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="/assets/css/fontawesome.min.css">
-<link rel="stylesheet" href="/assets/css/magnific-popup.min.css">
-<link rel="stylesheet" href="/assets/css/swiper-bundle.min.css">
 <link rel="stylesheet" href="/assets/css/style.min.css">
+
+{# Non-critical CSS - Defer loading #}
+<link rel="stylesheet" href="/assets/css/fontawesome.min.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="/assets/css/magnific-popup.min.css" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="/assets/css/swiper-bundle.min.css" media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet" href="/assets/css/fontawesome.min.css">
+  <link rel="stylesheet" href="/assets/css/magnific-popup.min.css">
+  <link rel="stylesheet" href="/assets/css/swiper-bundle.min.css">
+</noscript>
