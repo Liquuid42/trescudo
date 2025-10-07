@@ -9012,7 +9012,7 @@ ul.comment-list .th-comment-item:first-child:not(.children .th-comment-item) > .
   padding: 0px 0 14px;
   margin: 0 30px;
 }
-.accordion-card .faq-text {
+.accordion-card p.faq-text {
   margin-bottom: -0.48em;
   color: #FFFFFF !important;
 }
