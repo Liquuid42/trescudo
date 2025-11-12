@@ -163,8 +163,8 @@ perform_rolling_update() {
     sed '/container_name:/d' $COMPOSE_FILE > $temp_compose_file
 
     # Step 1: Build new image
-    log_info "Building new image..."
-    docker compose -p $PROJECT_NAME -f $temp_compose_file build $SERVICE_NAME
+    log_info "Building new image (without cache for fresh build)..."
+    docker compose -p $PROJECT_NAME -f $temp_compose_file build --no-cache $SERVICE_NAME
 
     # Step 2: Scale up with new version (keeping old containers running)
     local new_scale=$((current_count + 1))
